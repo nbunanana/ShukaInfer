@@ -15,15 +15,15 @@ namespace shukainfer {
      * Enumerates the data types supported for operator attributes like weights and biases.
      */
     enum class RuntimeDataType {
-        KTypeUnknow = 0,
-        KTypeFloat16 = 1,
-        KTypeFloat32 = 2,
-        KTypeFloat64 = 3,
-        KTypeInt8 = 4,
-        KTypeUInt8 = 5,
-        KTypeInt16 = 6,
-        KTypeUInt32 = 7,
-        KTypeInt64 = 8,
+        kTypeUnknow = 0,
+        kTypeFloat16 = 1,
+        kTypeFloat32 = 2,
+        kTypeFloat64 = 3,
+        kTypeInt8 = 4,
+        kTypeUInt8 = 5,
+        kTypeInt16 = 6,
+        kTypeUInt32 = 7,
+        kTypeInt64 = 8,
     };
 }// shukainfer
 #endif //SHUKAINFER_RUNTIME_RUNTIMEDATATYPE_HPP

@@ -34,7 +34,7 @@ namespace shukainfer {
         std::vector<int32_t> shapes;
 
         /// Data type of the attribute.
-        RuntimeDataType type = RuntimeDataType::KTypeUnknow;
+        RuntimeDataType type = RuntimeDataType::kTypeUnknow;
 
         /**
          * @brief Gets the attribute data as a typed array.

@@ -5,7 +5,7 @@ project(shukainfer)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 17)
 
-# 定义PROJECT_ROOT，值为当前cmakelists文件路径
+# 定义PROJECT_ROOT，值为当前CmakeLists文件路径
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR})
 
 # 生成 compile_commands.json（记录了项目中每个源文件是如何被编译的，包括完整的编译命令、编译器路径、头文件搜索路径、宏定义等），供 clangd 等开发工具使用。

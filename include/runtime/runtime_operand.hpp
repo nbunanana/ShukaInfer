@@ -71,7 +71,7 @@ namespace shukainfer {
         /**
          * @brief Data type the operand.
          */
-        RuntimeDataType type = RuntimeDataType::KTypeUnknow;
+        RuntimeDataType type = RuntimeDataType::kTypeUnknow;
     };
 
     using RuntimeOperand = RuntimeOperandBase<float>;

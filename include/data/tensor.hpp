@@ -31,7 +31,7 @@ class Tensor {
     explicit Tensor(T* raw_ptr, const std::vector<uint32_t>& shapes);
 
     /**
-     * @brief Construct a empty Tensor(default constructor)
+     * @brief Construct the empty Tensor(default constructor)
      * 
      */
     explicit Tensor() = default;
@@ -336,13 +336,13 @@ class Tensor {
 };
 
 template <typename T = float>
-using sptr_tensor = std::shared_ptr<Tensor<T>>;
+using tensorptr = std::shared_ptr<Tensor<T>>;
 
 using ftensor = Tensor<float>;
-using sptr_ftensor = std::shared_ptr<Tensor<float>>;
+using ftensorptr = std::shared_ptr<Tensor<float>>;
 
 using utensor = Tensor<uint8_t>;
-using sptr_utensor = std::shared_ptr<Tensor<uint8_t>>;
+using utensorptr = std::shared_ptr<Tensor<uint8_t>>;
 
 } // shukainfer
 
