@@ -13,7 +13,7 @@
 #include <memory>
 #include <tuple>
 #include "data/tensor.hpp"
-#include "data/tensor_util.hpp"
+#include "data/tensor_utils.hpp"
 
 namespace shukainfer {
     template<typename T>

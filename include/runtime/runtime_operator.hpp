@@ -58,7 +58,7 @@ struct RuntimeOperatorBase {
   std::vector<std::string> output_names;
 
   /// Output operand
-  std::shared_ptr<RuntimeOperandBase<T>> output_operands;
+  std::shared_ptr<RuntimeOperandBase<T>> output_operand;
 
   /// Input operands mapped by provider name
   std::map<std::string, std::shared_ptr<RuntimeOperandBase<T>>> input_operands;
@@ -114,10 +114,10 @@ class RuntimeOperatorUtils<float> {
    * On later runs, checks shape match.
    *
    * @param pnnx_operators Vector of PNNX operators
-   * @param operators Vector of runtime operators
+   * @param runtime_operators Vector of runtime operators
    */
   static void InitOperatorOutput(const std::vector<pnnx::Operator*>& pnnx_operators,
-                                 const std::vector<std::shared_ptr<RuntimeOperator>>& operators);
+                                 const std::vector<std::shared_ptr<RuntimeOperator>>& runtime_operators);
 };
 
 }  // shukainfer
