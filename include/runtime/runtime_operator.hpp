@@ -2,7 +2,7 @@
  * @file    runtime_operator.hpp
  * @author  nbunanana
  * @date    9/28/26
- * @brief
+ * @brief   Base for runtime graph operator
  * @copyright Copyright (c) 2026 shuka
  * @license MIT
  */
@@ -60,17 +60,17 @@ struct RuntimeOperatorBase {
   /// Output operand
   std::shared_ptr<RuntimeOperandBase<T>> output_operand;
 
-  /// Input operands mapped by provider name
+  /// Input operands mapped by provider name(按照上游算子的名字查找，供写入方使用)
   std::map<std::string, std::shared_ptr<RuntimeOperandBase<T>>> input_operands;
 
-  /// Input operands in sequence
+  /// Input operands in sequence(按照输入顺序查找，供读取方使用)
   std::vector<std::shared_ptr<RuntimeOperandBase<T>>> input_operands_seq;
 
   /// Output operators mapped by output name
   std::map<std::string, std::shared_ptr<RuntimeOperatorBase<T>>> output_operators;
 
   /// Operator parameters
-  std::map<std::string, std::shared_ptr<RuntimeParameter>> params;
+  std::map<std::string, std::shared_ptr<RuntimeParameter>> parameters;
 
   /// Operator attributes like weights
   std::map<std::string, std::shared_ptr<RuntimeAttribute>> attributes;

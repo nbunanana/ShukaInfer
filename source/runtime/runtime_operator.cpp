@@ -2,7 +2,7 @@
  * @file    runtime_operator.cpp
  * @author  nbunanana
  * @date    10/5/26
- * @brief   ${DO_NOT_EDIT}
+ * @brief   Base for runtime graph operator
  * @copyright Copyright (c) 2026 shuka
  * @license MIT
  */
