@@ -20,6 +20,7 @@
 #include <glog/logging.h>
 #include <iterator>
 #include <memory>
+#include <string>
 #include <vector>
 
 namespace shukainfer {
@@ -118,6 +119,19 @@ namespace shukainfer {
 
     const std::string &RuntimeGraph::get_bin_path() const {
         return this->bin_path_;
+    }
+
+    template<typename T>
+    StatusCode ExecuteLayer(const std::shared_ptr<Layer<T>>& layer, const std::string& operator_name, const std::string& operator_type, bool is_debug) {
+        CHECK(layer != nullptr);
+        StatusCode status;
+        if(is_debug) {
+            utils::LayerTimeLogging layer_time_logging(operator_name, operator_type);
+            status = layer->Forward();
+        } else {
+            status = layer->Forward();
+        }
+        return status;
     }
 
     void RuntimeGraph::Forward(bool debug) {
