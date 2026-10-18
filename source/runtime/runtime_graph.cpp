@@ -160,7 +160,7 @@ namespace shukainfer {
             StatusCode status = ExecuteLayer(current_op->layer, current_op->name, current_op->type, debug);
             CHECK(status == StatusCode::kSuccess)
                 << current_op->layer->layer_name()
-                << " layer forward failed, error code: " << int32_t(status);
+                << " layer forward failed, error code: " << static_cast<int32_t>(status);
 
             current_op->has_forward = true;
             // 将当前节点的output_operand广播到下游节点的input_operands
@@ -253,7 +253,7 @@ namespace shukainfer {
            }
         }
 
-        std::copy(this->operators_.begin(), this->operators_.end(), [](const auto& op1, const auto& op2){
+        std::sort(this->operators_.begin(), this->operators_.end(), [](const auto& op1, const auto& op2){
             return op1->start_time > op2->start_time;
         });
 
