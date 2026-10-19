@@ -67,7 +67,7 @@ namespace shukainfer {
     }
 
     template<typename T>
-    const std::vector<std::shared_ptr<Tensor<T>>>&Layer<T>::get_biases() const {
+    const std::vector<std::shared_ptr<Tensor<T>>>&Layer<T>::get_bias() const {
         LOG(FATAL) << this->layer_name_ << "layer not implement yet!! without you my friend.";
     }
 
