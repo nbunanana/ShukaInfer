@@ -2,7 +2,7 @@
  * @file    load_data.cpp
  * @author  nbunanana
  * @date    10/23/26
- * @brief   ${DO_NOT_EDIT}
+ * @brief   Loading method of CSV file
  * @copyright Copyright (c) 2026 shuka
  * @license MIT
  */
@@ -33,7 +33,7 @@ namespace shukainfer {
         std::stringstream line_stream;
 
         const auto& [rows, cols] = CSVDataLoader::GetMatrixSize(in, split_char);
-        datas.zero();
+        datas.zeros(rows, cols);
 
         size_t row = 0;
         while (in.good()) {
@@ -55,7 +55,7 @@ namespace shukainfer {
                     } else if (std::is_same_v<T, int8_t> || std::is_same_v<T, int32_t>) {
                         datas.at(row, col) = std::stoi(token);
                     } else {
-                        LOG(FATAL) << "Unsuppoeted data type \n";
+                        LOG(FATAL) << "Unsupported data type \n";
                     }
                 } catch (std::exception& e) {
                     DLOG(ERROR) << e.what() << "Parse CSV File meet error: " << e.what() << " row:" << row << " col:" << col;
@@ -75,7 +75,7 @@ namespace shukainfer {
 
         size_t fn_rows = 0;
         size_t fn_cols = 0;
-        const std::ifstream::pos_type start_position = file.is_open();
+        const std::ifstream::pos_type start_position = file.tellg();
 
         std::string token;
         std::string line_str;
@@ -100,9 +100,18 @@ namespace shukainfer {
             if (line_cols > fn_cols) {
                 fn_cols = line_cols;
             }
-            file.clear();
-            file.seekg(start_position);
-            return {fn_rows, fn_cols};
+            fn_rows += 1;
         }
+
+        file.clear();
+        file.seekg(start_position);
+        return {fn_rows, fn_cols};
     }
+
+    template arma::Mat<float>
+    CSVDataLoader::LoadData<float>(const std::string &file_path, char split_char);
+
+    template arma::Mat<int32_t>
+    CSVDataLoader::LoadData<int32_t>(const std::string &file_path, char split_char);
+
 }// shukainfer

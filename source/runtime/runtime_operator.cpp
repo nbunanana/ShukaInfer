@@ -34,31 +34,35 @@ namespace shukainfer {
     }
 
     void RuntimeOperatorUtils<float>::InitOperatorInput(const std::vector<std::shared_ptr<RuntimeOperator> > &operators) {
-        CHECK(operators.empty()) << "Operators for init input shapes is empty";
-        for (const std::shared_ptr<RuntimeOperator>& op : operators) {
-            const std::map<std::string, std::shared_ptr<RuntimeOperand>>& input_operand_map = op->input_operands;
-            for (const auto& [_, input_operand] : input_operand_map) {
-                if (input_operand == nullptr) {
-                    continue;
-                }
+        if (operators.empty()) {
+            LOG(ERROR) << "operators for init input shapes is  empty!!";
+            return;
+        }
+        for (const auto& op : operators) {
+            if (op->input_operands.empty()) {
+                continue;
+            } else {
+                for (const auto& [_, input_operand] : op->input_operands) {
+                    if (input_operand == nullptr) {
+                        continue;
+                    }
+                    const RuntimeDataType& type = input_operand->type;
+                    auto& input_datas = input_operand->datas;
+                    CHECK(type == RuntimeDataType::kTypeFloat32) << "The graph only support float32 yet!!";
+                    const auto& input_operand_shapes = input_operand->shapes;
 
-                const RuntimeDataType& type = input_operand->type;
-                CHECK(type == RuntimeDataType::kTypeFloat32) << "The graph only support float32 yet!!";
+                    CHECK(!input_operand_shapes.empty()) << "input_operand_shapes is empty!!";
+                    const int32_t batch = input_operand_shapes.at(0);
+                    CHECK(batch >0) << "Dynamic batch size is not supported yet!!";
+                    CHECK(input_operand_shapes.size() == 2 || input_operand_shapes.size() == 4 ||
+                          input_operand_shapes.size() == 3)
+                        << "Unsupported tensor shape sizes: " << input_operand_shapes.size();
 
-                const std::vector<int32_t> input_operand_shapes = input_operand->shapes;
-                auto& input_datas = input_operand->datas;
-
-                CHECK(input_operand_shapes.size() == 2 || input_operand_shapes.size() == 4 ||
-                      input_operand_shapes.size() == 3)
-                    << "Unsupported tensor shape sizes: " << input_operand_shapes.size();
-
-                const int32_t& batch = input_operand_shapes.at(0);
-                CHECK(batch > 0) << "Dynamic batch size is not supported!";
-
-                if (!input_datas.empty()) {
-                    CHECK_EQ(input_datas.size(), batch);
-                } else {
-                    input_datas.resize(batch);
+                    if (!input_datas.empty()) {
+                        CHECK_EQ(input_datas.size(), batch);
+                    } else {
+                        input_datas.resize(batch);
+                    }
                 }
             }
         }

@@ -15,6 +15,8 @@
 #include "runtime/runtime_datatype.hpp"
 #include "runtime/runtime_operator.hpp"
 #include "runtime/runtime_parameter.hpp"
+#include "layer/abstract/layer_factory.hpp"
+#include "utils/time/time_logging.hpp"
 #include <algorithm>
 #include <cstdint>
 #include <glog/logging.h>
@@ -159,7 +161,7 @@ namespace shukainfer {
 
             StatusCode status = ExecuteLayer(current_op->layer, current_op->name, current_op->type, debug);
             CHECK(status == StatusCode::kSuccess)
-                << current_op->layer->layer_name()
+                << current_op->layer->get_layer_name()
                 << " layer forward failed, error code: " << static_cast<int32_t>(status);
 
             current_op->has_forward = true;
@@ -178,7 +180,7 @@ namespace shukainfer {
 
     // Only use in this cpp file
     static bool IsQuantizeOperator_(const pnnx::Operator* op) {
-        if(op != nullptr) {
+        if(op == nullptr) {
             return false;
         }
         return op->name.rfind("quantized_", 0) == 0; 
@@ -401,7 +403,7 @@ namespace shukainfer {
                 case 1: {
                     std::shared_ptr<RuntimeAttribute> runtime_attribute = std::make_shared<RuntimeAttribute>(
                         attr.shape, RuntimeDataType::kTypeFloat32, attr.data); 
-                        runtime_operator->attributes.insert(name, runtime_operator);
+                        runtime_operator->attributes.insert({name, runtime_attribute});
                         break;
                 }
                 default: {
@@ -422,58 +424,58 @@ namespace shukainfer {
         for (const auto& [name, param] : parameters) {
             switch (param.type) {
                 case int32_t(RuntimeParameterType::kParameterUnknown): {
-                    std::shared_ptr<RuntimeParameter> runtime_parmeter = 
+                    std::shared_ptr<RuntimeParameter> runtime_parameter =
                         std::make_shared<RuntimeParameter>();
-                    runtime_operator->parameters.insert(name, runtime_parmeter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
                 case int32_t(RuntimeParameterType::kParameterInt): {
                     std::shared_ptr<RuntimeParameterInt> runtime_parameter = 
                         std::make_shared<RuntimeParameterInt>(param.i);
-                    runtime_operator->parmeters.insert(name, runtime_parameter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
                 case int32_t(RuntimeParameterType::kParameterFloat): {
                     std::shared_ptr<RuntimeParameterFloat> runtime_parameter = 
                         std::make_shared<RuntimeParameterFloat>(param.f);
-                    runtime_operator->parmeters.insert(name, runtime_parameter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
                 case int32_t(RuntimeParameterType::kParameterString): {
                     std::shared_ptr<RuntimeParameterString> runtime_parameter = 
                         std::make_shared<RuntimeParameterString>(param.s);
-                    runtime_operator->parmeters.insert(name, runtime_parameter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
                 case int32_t(RuntimeParameterType::kParameterBool): {
                     std::shared_ptr<RuntimeParameterBool> runtime_parameter = 
                         std::make_shared<RuntimeParameterBool>(param.b);
-                    runtime_operator->parmeters.insert(name, runtime_parameter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
                 case int32_t(RuntimeParameterType::kParameterIntArray): {
                     std::shared_ptr<RuntimeParameterIntArray> runtime_parameter = 
                         std::make_shared<RuntimeParameterIntArray>(param.ai);
-                    runtime_operator->parmeters.insert(name, runtime_parameter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
                 case int32_t(RuntimeParameterType::kParameterStringArray): {
                     std::shared_ptr<RuntimeParameterStringArray> runtime_parameter = 
                         std::make_shared<RuntimeParameterStringArray>(param.as);
-                    runtime_operator->parmeters.insert(name, runtime_parameter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
                 case int32_t(RuntimeParameterType::kParameterFloatArray): {
                     std::shared_ptr<RuntimeParameterFloatArray> runtime_parameter = 
                         std::make_shared<RuntimeParameterFloatArray>(param.af);
-                    runtime_operator->parmeters.insert(name, runtime_parameter);
+                    runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
             }
@@ -483,7 +485,7 @@ namespace shukainfer {
     template<typename T>
     std::shared_ptr<Layer<T>> RuntimeGraph::CreateLayer(const std::shared_ptr<RuntimeOperatorBase<T>>& common_operator) {
         LOG_IF(FATAL, !common_operator) << "Operator is empty!";
-        auto layer = LayerRegisterer::CreateLayer(common_operator);
+        auto layer = LayerRegister<T>::CreateLayer(common_operator);
         LOG_IF(FATAL, !layer) << "Layer init failed " << common_operator->type;
         return layer;
     }

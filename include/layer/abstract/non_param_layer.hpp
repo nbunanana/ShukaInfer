@@ -13,5 +13,5 @@
 namespace shukainfer {
     template <typename T>
     using NonParamLayer = Layer<T>;
-} // shukainfe
+} // shukainfer
 #endif //SHUKAINFER_LAYER_ABSTRACT_NONPARAMLAYER_HPP

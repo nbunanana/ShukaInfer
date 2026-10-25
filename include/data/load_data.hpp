@@ -2,7 +2,7 @@
  * @file    load_data.hpp
  * @author  nbunanana
  * @date    10/23/26
- * @brief   
+ * @brief   Loading method of CSV file
  * @copyright Copyright (c) 2026 shuka
  * @license MIT
  */

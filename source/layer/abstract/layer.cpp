@@ -18,7 +18,7 @@ namespace shukainfer {
     }
 
     template<typename T>
-    StatusCode Layer<T>::Forward(const std::vector<std::shared_ptr<Tensor<T> > > &inputs, const std::vector<std::shared_ptr<Tensor<T> > > &outputs) {
+    StatusCode Layer<T>::Forward(const std::vector<std::shared_ptr<Tensor<T> > > &inputs, std::vector<std::shared_ptr<Tensor<T> > > &outputs) {
         LOG(FATAL) << this->layer_name_ << "layer not implement yet!!  Yeah！！！！~~~~~~~~";
         return StatusCode::kFunctionNotImplement;
     }

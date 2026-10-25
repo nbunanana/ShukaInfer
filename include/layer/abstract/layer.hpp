@@ -71,7 +71,7 @@ namespace shukainfer {
          * @param outputs Output tensors.
          * @returnStatus code indicating success or failure(specific error with status code).
          */
-        virtual StatusCode Forward(const std::vector<std::shared_ptr<Tensor<T>>>& inputs, const std::vector<std::shared_ptr<Tensor<T>>>& outputs);
+        virtual StatusCode Forward(const std::vector<std::shared_ptr<Tensor<T>>>& inputs, std::vector<std::shared_ptr<Tensor<T>>>& outputs);
 
         /**
          * @brief Get layer weights.

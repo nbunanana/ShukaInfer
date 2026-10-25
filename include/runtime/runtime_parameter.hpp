@@ -28,7 +28,7 @@
 namespace shukainfer {
     struct RuntimeParameter {
         virtual ~RuntimeParameter() = default;
-        explicit RuntimeParameter(RuntimeParameterType type) : type(type) {}
+        explicit RuntimeParameter(RuntimeParameterType type = RuntimeParameterType::kParameterUnknown) : type(type) {}
         RuntimeParameterType type = RuntimeParameterType::kParameterUnknown;
     };
 

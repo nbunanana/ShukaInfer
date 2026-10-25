@@ -216,16 +216,86 @@ void TensorElementMultiply(const std::shared_ptr<Tensor<T>>& tensor1, const std:
         output_tensor->set_data(broadcast_tensor1->data() % broadcast_tensor2->data());
     }
 }
- 
 
-template bool TensorIsSame<float>(const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&, float);
-template std::shared_ptr<Tensor<float>> TensorPadding<float>(const std::shared_ptr<Tensor<float>>, const std::vector<uint32_t>&, float);
-template std::tuple<std::shared_ptr<Tensor<float>>, std::shared_ptr<Tensor<float>>> TensorBroadcast<float>(const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&);
-template std::shared_ptr<Tensor<float>> TensorElementAdd<float>(const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&);
-template void TensorElementAdd<float>(const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&);
-template std::shared_ptr<Tensor<float>> TensorElementMultiply<float>(const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&);
-template void TensorElementMultiply<float>(const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&, const std::shared_ptr<Tensor<float>>&);
-template std::shared_ptr<Tensor<float>> TensorClone<float>(const std::shared_ptr<Tensor<float>>);
 
+    // ------------------ float 实例化 ------------------
+template std::shared_ptr<Tensor<float>>
+TensorCreate<float>(uint32_t channels, uint32_t rows, uint32_t cols);
+
+template std::shared_ptr<Tensor<float>>
+TensorCreate<float>(uint32_t rows, uint32_t cols);
+
+template std::shared_ptr<Tensor<float>>
+TensorCreate<float>(uint32_t size);
+
+template std::shared_ptr<Tensor<float>>
+TensorCreate<float>(const std::vector<uint32_t>& shapes);
+
+template bool
+TensorIsSame<float>(const std::shared_ptr<Tensor<float>>& tensor1,
+                    const std::shared_ptr<Tensor<float>>& tensor2, float threshold);
+
+template std::shared_ptr<Tensor<float>>
+TensorPadding<float>(const std::shared_ptr<Tensor<float>> tensor,
+                     const std::vector<uint32_t>& pads, float padding_value);
+
+template std::tuple<std::shared_ptr<Tensor<float>>, std::shared_ptr<Tensor<float>>>
+TensorBroadcast<float>(const std::shared_ptr<Tensor<float>>& tensor1,
+                       const std::shared_ptr<Tensor<float>>& tensor2);
+
+template std::shared_ptr<Tensor<float>>
+TensorClone<float>(std::shared_ptr<Tensor<float>> tensor);
+
+template std::shared_ptr<Tensor<float>>
+TensorElementAdd<float>(const std::shared_ptr<Tensor<float>>& tensor1,
+                        const std::shared_ptr<Tensor<float>>& tensor2);
+
+template void
+TensorElementAdd<float>(const std::shared_ptr<Tensor<float>>& tensor1,
+                        const std::shared_ptr<Tensor<float>>& tensor2,
+                        const std::shared_ptr<Tensor<float>>& output_tensor);
+
+template std::shared_ptr<Tensor<float>>
+TensorElementMultiply<float>(const std::shared_ptr<Tensor<float>>& tensor1,
+                             const std::shared_ptr<Tensor<float>>& tensor2);
+
+template void
+TensorElementMultiply<float>(const std::shared_ptr<Tensor<float>>& tensor1,
+                             const std::shared_ptr<Tensor<float>>& tensor2,
+                             const std::shared_ptr<Tensor<float>>& output_tensor);
+
+// ------------------ uint8_t 实例化 ------------------
+template std::shared_ptr<Tensor<uint8_t>>TensorCreate<uint8_t>(uint32_t channels, uint32_t rows, uint32_t cols);
+
+template std::shared_ptr<Tensor<uint8_t>>TensorCreate<uint8_t>(uint32_t rows, uint32_t cols);
+
+template std::shared_ptr<Tensor<uint8_t>>TensorCreate<uint8_t>(uint32_t size);
+
+template std::shared_ptr<Tensor<uint8_t>>TensorCreate<uint8_t>(const std::vector<uint32_t>& shapes);
+
+template bool TensorIsSame<uint8_t>(const std::shared_ptr<Tensor<uint8_t>>& tensor1,
+                      const std::shared_ptr<Tensor<uint8_t>>& tensor2, uint8_t threshold);
+
+template std::shared_ptr<Tensor<uint8_t>>TensorPadding<uint8_t>(const std::shared_ptr<Tensor<uint8_t>> tensor,
+                       const std::vector<uint32_t>& pads, uint8_t padding_value);
+
+template std::tuple<std::shared_ptr<Tensor<uint8_t>>, std::shared_ptr<Tensor<uint8_t>>>TensorBroadcast<uint8_t>(const std::shared_ptr<Tensor<uint8_t>>& tensor1,
+                         const std::shared_ptr<Tensor<uint8_t>>& tensor2);
+
+template std::shared_ptr<Tensor<uint8_t>>TensorClone<uint8_t>(std::shared_ptr<Tensor<uint8_t>> tensor);
+
+template std::shared_ptr<Tensor<uint8_t>>TensorElementAdd<uint8_t>(const std::shared_ptr<Tensor<uint8_t>>& tensor1,
+                          const std::shared_ptr<Tensor<uint8_t>>& tensor2);
+
+template void TensorElementAdd<uint8_t>(const std::shared_ptr<Tensor<uint8_t>>& tensor1,
+                          const std::shared_ptr<Tensor<uint8_t>>& tensor2,
+                          const std::shared_ptr<Tensor<uint8_t>>& output_tensor);
+
+template std::shared_ptr<Tensor<uint8_t>>TensorElementMultiply<uint8_t>(const std::shared_ptr<Tensor<uint8_t>>& tensor1,
+                               const std::shared_ptr<Tensor<uint8_t>>& tensor2);
+
+template void TensorElementMultiply<uint8_t>(const std::shared_ptr<Tensor<uint8_t>>& tensor1,
+                               const std::shared_ptr<Tensor<uint8_t>>& tensor2,
+                               const std::shared_ptr<Tensor<uint8_t>>& output_tensor);
 
 } // shukainfer

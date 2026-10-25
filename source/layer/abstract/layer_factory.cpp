@@ -27,7 +27,7 @@ namespace shukainfer {
     }
 
     template <typename T>
-    typename std::shared_ptr<Layer<T>> LayerRegister<T>::CreateLayer(const std::shared_ptr<RuntimeOperatorBase<T>>& op) {
+    std::shared_ptr<Layer<T>> LayerRegister<T>::CreateLayer(const std::shared_ptr<RuntimeOperatorBase<T>>& op) {
         CreateRegistry* registry = Registry();
         const std::string& layer_type = op->type;
         LOG_IF(FATAL, registry->count(layer_type) == 0) << "Can not find the layer type: " << layer_type;
@@ -62,4 +62,7 @@ namespace shukainfer {
         std::vector<std::string> layer_types(layer_types_unique.begin(), layer_types_unique.end());
         return layer_types;
     }
+
+    template class LayerRegister<float>;
+    template class LayerRegister<uint8_t>;
 } // shukainfer
