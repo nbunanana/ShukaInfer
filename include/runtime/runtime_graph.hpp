@@ -176,7 +176,7 @@ namespace shukainfer {
          * @param runtime_operator The runtime operator to initialize inputs for.
          */
         template<typename T>
-        static void InitGraphOperatorsOutput(const std::vector<pnnx::Operand*> outputs, const std::shared_ptr<RuntimeOperatorBase<T>>& runtime_operator);
+        static void InitGraphOperatorsOutput(const std::vector<pnnx::Operand*>& outputs, const std::shared_ptr<RuntimeOperatorBase<T>>& runtime_operator);
 
         /**
          * @brief Initializes operator attributes.

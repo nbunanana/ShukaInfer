@@ -2,7 +2,7 @@
  * @file    layer_factory.hpp
  * @author  nbunanana
  * @date    10/13/26
- * @brief   
+ * @brief   The registry implementation of the layer, including the operator registration class and the operator registry recycling class.
  * @copyright Copyright (c) 2026 shuka
  * @license MIT
  */
@@ -40,7 +40,6 @@ namespace shukainfer {
     private:
         static CreateRegistry* registry_;
     };
-
 
     template <typename T>
     class LayerRegisterWarper {

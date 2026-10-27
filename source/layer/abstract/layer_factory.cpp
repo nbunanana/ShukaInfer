@@ -2,7 +2,7 @@
  * @file    layer_factory.cpp
  * @author  nbunanana
  * @date    10/14/26
- * @brief   ${DO_NOT_EDIT}
+ * @brief   The registry implementation of the layer, including the operator registration class and the operator registry recycling class.
  * @copyright Copyright (c) 2026 shuka
  * @license MIT
  */
@@ -22,7 +22,9 @@ namespace shukainfer {
         CHECK(creator != nullptr) << "Creator is null!";
 
         CreateRegistry* registry = registry_;
-        CHECK_EQ(registry->count(layer_type), 0) << "Layer type: " << layer_type << "has alerady registered!";
+
+        // Check the table to see if this operator has been registered
+        CHECK_EQ(registry->count(layer_type), 0) << "Layer type: " << layer_type << "has already registered!";
         registry->insert({layer_type, creator});
     }
 
@@ -33,12 +35,11 @@ namespace shukainfer {
         LOG_IF(FATAL, registry->count(layer_type) == 0) << "Can not find the layer type: " << layer_type;
         const auto& creator = registry->find(layer_type)->second;
 
-
-        LOG_IF(FATAL, creator != nullptr) << "Layer craetor is null!";
+        LOG_IF(FATAL, creator != nullptr) << "Layer creator is null!";
         std::shared_ptr<Layer<T>> layer;
 
         const auto& status = creator(op, layer);
-        LOG_IF(FATAL, status != StatusCode::kSuccess) << "Create the layer: " << layer_type << " failed, error code: " << int32_t(status);
+        LOG_IF(FATAL, status != StatusCode::kSuccess) << "Create the layer: " << layer_type << " failed, error code: " << static_cast<int32_t>(status);
         return layer;
     }
 

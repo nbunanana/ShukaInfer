@@ -374,7 +374,7 @@ namespace shukainfer {
     }
 
     template<typename T>
-    void RuntimeGraph::InitGraphOperatorsOutput(const std::vector<pnnx::Operand *> outputs, const std::shared_ptr<RuntimeOperatorBase<T> > &runtime_operator) {
+    void RuntimeGraph::InitGraphOperatorsOutput(const std::vector<pnnx::Operand *>& outputs, const std::shared_ptr<RuntimeOperatorBase<T> > &runtime_operator) {
         if (outputs.empty()) {
             return;
         }
@@ -423,56 +423,56 @@ namespace shukainfer {
         CHECK(runtime_operator != nullptr) << "The runtime operator is null pointer";
         for (const auto& [name, param] : parameters) {
             switch (param.type) {
-                case int32_t(RuntimeParameterType::kParameterUnknown): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterUnknown): {
                     std::shared_ptr<RuntimeParameter> runtime_parameter =
                         std::make_shared<RuntimeParameter>();
                     runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
-                case int32_t(RuntimeParameterType::kParameterInt): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterInt): {
                     std::shared_ptr<RuntimeParameterInt> runtime_parameter = 
                         std::make_shared<RuntimeParameterInt>(param.i);
                     runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
-                case int32_t(RuntimeParameterType::kParameterFloat): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterFloat): {
                     std::shared_ptr<RuntimeParameterFloat> runtime_parameter = 
                         std::make_shared<RuntimeParameterFloat>(param.f);
                     runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
-                case int32_t(RuntimeParameterType::kParameterString): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterString): {
                     std::shared_ptr<RuntimeParameterString> runtime_parameter = 
                         std::make_shared<RuntimeParameterString>(param.s);
                     runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
-                case int32_t(RuntimeParameterType::kParameterBool): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterBool): {
                     std::shared_ptr<RuntimeParameterBool> runtime_parameter = 
                         std::make_shared<RuntimeParameterBool>(param.b);
                     runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
-                case int32_t(RuntimeParameterType::kParameterIntArray): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterIntArray): {
                     std::shared_ptr<RuntimeParameterIntArray> runtime_parameter = 
                         std::make_shared<RuntimeParameterIntArray>(param.ai);
                     runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
-                case int32_t(RuntimeParameterType::kParameterStringArray): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterStringArray): {
                     std::shared_ptr<RuntimeParameterStringArray> runtime_parameter = 
                         std::make_shared<RuntimeParameterStringArray>(param.as);
                     runtime_operator->parameters.insert({name, runtime_parameter});
                     break;
                 }
 
-                case int32_t(RuntimeParameterType::kParameterFloatArray): {
+                case static_cast<int32_t>(RuntimeParameterType::kParameterFloatArray): {
                     std::shared_ptr<RuntimeParameterFloatArray> runtime_parameter = 
                         std::make_shared<RuntimeParameterFloatArray>(param.af);
                     runtime_operator->parameters.insert({name, runtime_parameter});
