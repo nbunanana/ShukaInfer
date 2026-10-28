@@ -15,7 +15,6 @@ namespace shukainfer::activations {
 template <typename T = float>
 class ReluLayer : public ActivationLayer<T> {
     public:
-
         explicit ReluLayer();
 
         StatusCode Forward(const std::vector<std::shared_ptr<Tensor<T>>>& inputs, std::vector<std::shared_ptr<Tensor<T>>>& outputs) override;

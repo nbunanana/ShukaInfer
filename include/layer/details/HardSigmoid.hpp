@@ -13,6 +13,7 @@
 namespace shukainfer::activations {
     template <typename T = float>
     class HardSigmoidLayer : public ActivationLayer<T> {
+    public:
         explicit HardSigmoidLayer();
 
         StatusCode Forward(const std::vector<std::shared_ptr<Tensor<T>>>& inputs, std::vector<std::shared_ptr<Tensor<T>>>& outputs) override;
